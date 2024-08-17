@@ -25,5 +25,8 @@ export default {
     MD: 16,
     LG: 18,
     XL: 24
-  }
+  },
+  ICON: {
+    FILL: 'fill',
+  },
 };
