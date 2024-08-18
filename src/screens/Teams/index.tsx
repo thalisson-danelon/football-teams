@@ -5,6 +5,7 @@ import { TeamCard } from 'src/components/TeamCard';
 import { useState } from 'react';
 import { FlatList } from 'react-native';
 import { ListEmpty } from '@components/ListEmpty';
+import { Button } from '@components/Button';
 
 export function Teams() {
   // const [teams, setTeams] = useState<string[]>(['Os Pernetas', 'Pernas de Pau', 'Tiririca', 'Cruzeiro do Sul']);
@@ -21,6 +22,7 @@ export function Teams() {
         renderItem={({ item }) => <TeamCard title={item} />}
         ListEmptyComponent={() => <ListEmpty message="Que tal cadastrar o primeiro time?" />}
       />
+      <Button title="Criar novo time" />
     </Container>
   );
 }
