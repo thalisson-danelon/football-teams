@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+
+import { teamGetAll } from '@storage/team/teamGetAll';
+
 import { Header } from '@components/Header';
 import { Highlight } from '@components/Highlight';
 import { TeamCard } from 'src/components/TeamCard';
 import { Button } from '@components/Button';
 import { ListEmpty } from '@components/ListEmpty';
+
 import { Container } from './styles';
 
 export function Teams() {
@@ -16,6 +20,19 @@ export function Teams() {
   function handleNewTeam() {
     navigation.navigate('newTeam');
   }
+
+  async function fetchTeams() {
+    try {
+      const data = await teamGetAll();
+      setTeams(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useFocusEffect(useCallback(() => {
+    fetchTeams();
+  }, []));
 
   return (
     <Container>
