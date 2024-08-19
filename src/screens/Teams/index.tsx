@@ -20,7 +20,10 @@ export function Teams() {
         keyExtractor={item => item}
         contentContainerStyle={teams.length === 0 && { flex: 1 }}
         renderItem={({ item }) => <TeamCard title={item} />}
-        ListEmptyComponent={() => <ListEmpty message="Que tal cadastrar o primeiro time?" />}
+        ListEmptyComponent={() =>
+          <ListEmpty message="Que tal cadastrar o primeiro time?" />
+        }
+        showsVerticalScrollIndicator={false}
       />
       <Button title="Criar novo time" />
     </Container>
