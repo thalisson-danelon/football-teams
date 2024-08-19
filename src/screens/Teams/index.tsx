@@ -13,7 +13,7 @@ import { ListEmpty } from '@components/ListEmpty';
 import { Container } from './styles';
 
 export function Teams() {
-  const [teams, setTeams] = useState<string[]>([]);
+  const [teamNames, setTeamNames] = useState<string[]>([]);
 
   const navigation = useNavigation();
 
@@ -24,14 +24,14 @@ export function Teams() {
   async function fetchTeams() {
     try {
       const data = await teamGetAll();
-      setTeams(data);
+      setTeamNames(data);
     } catch (error) {
       console.log(error);
     }
   }
 
-  function handleOpenTeams(team: string) {
-    navigation.navigate('players', { team });
+  function handleOpenTeams(teamName: string) {
+    navigation.navigate('players', { team: teamName });
   }
 
   useFocusEffect(useCallback(() => {
@@ -43,9 +43,9 @@ export function Teams() {
       <Header />
       <Highlight title="Times" subtitle="Jogue com o seu time" />
       <FlatList
-        data={teams}
+        data={teamNames}
         keyExtractor={item => item}
-        contentContainerStyle={teams.length === 0 && { flex: 1 }}
+        contentContainerStyle={teamNames.length === 0 && { flex: 1 }}
         renderItem={({ item }) =>
           <TeamCard
             title={item}

@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { Alert, FlatList, TextInput } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { AppError } from '@utils/AppError';
 
 import { playerAddByTeam } from '@storage/player/playerAddByTeam';
 import { PlayerStorageDTO } from '@storage/player/PlayerStorageDTO';
 import { playersGetByTeamAndTeamSelected } from '@storage/player/playersGetByTeamAndTeamSelected';
+import { playerRemoveByTeam } from '@storage/player/playerRemoveByTeam';
+import { teamRemoveByName } from '@storage/team/teamRemoveByName';
 
 import { Header } from '@components/Header';
 import { Highlight } from '@components/Highlight';
@@ -18,7 +20,6 @@ import { ListEmpty } from '@components/ListEmpty';
 import { Button } from '@components/Button';
 
 import { Container, Form, HeaderList, NumberOfPlayers } from './styles';
-import { playerRemoveByTeam } from '@storage/player/playerRemoveByTeam';
 
 type RouteParams = {
   team: string;
@@ -28,6 +29,8 @@ export function Players() {
   const [newPlayerName, setNewPlayerName] = useState('');
   const [teamSelected, setTeamSelected] = useState('Time A');
   const [players, setPlayers] = useState<PlayerStorageDTO[]>([]);
+
+  const navigation = useNavigation();
 
   const route = useRoute();
   const { team: teamName } = route.params as RouteParams;
@@ -75,6 +78,27 @@ export function Players() {
       console.log(error);
       return Alert.alert('Erro', 'Não foi possível remover o loader');
     }
+  }
+
+  async function removeTeam() {
+    try {
+      await teamRemoveByName(teamName);
+      navigation.navigate('teams');
+    } catch (error) {
+      console.log(error);
+      return Alert.alert('Erro', 'Não foi possível remover o time');
+    }
+  }
+
+  async function handleRemoveTeam() {
+    Alert.alert(
+      'Remover time',
+      'Tem certeza que deseja remover o time?',
+      [
+        { text: 'Não', style: 'cancel' },
+        { text: 'Sim', style: 'destructive', onPress: removeTeam }
+      ]
+    );
   }
 
   useEffect(() => {
@@ -132,7 +156,7 @@ export function Players() {
           players.length === 0 && { flex: 1 }
         ]}
       />
-      <Button title="Remover Time" type="SECONDARY" />
+      <Button title="Remover Time" type="SECONDARY" onPress={handleRemoveTeam} />
     </Container>
   );
 }
