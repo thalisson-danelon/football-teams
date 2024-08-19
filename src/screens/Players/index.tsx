@@ -18,6 +18,7 @@ import { ListEmpty } from '@components/ListEmpty';
 import { Button } from '@components/Button';
 
 import { Container, Form, HeaderList, NumberOfPlayers } from './styles';
+import { playerRemoveByTeam } from '@storage/player/playerRemoveByTeam';
 
 type RouteParams = {
   team: string;
@@ -66,6 +67,16 @@ export function Players() {
     }
   }
 
+  async function handleRemovePlayer(playerName: string) {
+    try {
+      await playerRemoveByTeam(playerName, teamName);
+      fetchPlayersByTeamSelected();
+    } catch (error) {
+      console.log(error);
+      return Alert.alert('Erro', 'Não foi possível remover o loader');
+    }
+  }
+
   useEffect(() => {
     fetchPlayersByTeamSelected();
   }, [teamSelected]);
@@ -108,6 +119,7 @@ export function Players() {
           <PlayerCard
             name={item.name}
             onRemove={() => {
+              handleRemovePlayer(item.name);
             }}
           />
         }
