@@ -42,7 +42,7 @@ export function Players() {
       team: teamSelected,
     };
     try {
-      await playerAddByTeam(newPlayer, teamSelected);
+      await playerAddByTeam(newPlayer, teamName);
       newPlayerNameInputRef.current?.blur();
       setNewPlayerName('');
       fetchPlayersByTeamSelected();
@@ -59,7 +59,6 @@ export function Players() {
   async function fetchPlayersByTeamSelected() {
     try {
       const playersByTeamSelected = await playersGetByTeamAndTeamSelected(teamName, teamSelected);
-      console.log(playersByTeamSelected);
       setPlayers(playersByTeamSelected);
     } catch (error) {
       console.log(error);

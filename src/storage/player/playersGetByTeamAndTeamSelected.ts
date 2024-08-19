@@ -1,9 +1,8 @@
 import { playersGetByTeam } from '@storage/player/playersGetByTeam';
 
-export async function playersGetByTeamAndTeamSelected(team: string, teamSelected: string) {
+export async function playersGetByTeamAndTeamSelected(teamName: string, teamSelected: string) {
   try {
-    console.log('team: ', team, 'teamSelected: ', teamSelected);
-    const storage = await playersGetByTeam(teamSelected);
+    const storage = await playersGetByTeam(teamName);
     return storage.filter(player => player.team === teamSelected);
   } catch (error) {
     throw error;

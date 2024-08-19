@@ -4,11 +4,10 @@ import { PLAYER_COLLECTION } from '@storage/storageConfig';
 
 import { PlayerStorageDTO } from './PlayerStorageDTO';
 
-export async function playersGetByTeam(team: string) {
+export async function playersGetByTeam(teamName: string) {
   try {
-    const storage = await AsyncStorage.getItem(`${PLAYER_COLLECTION}-${team}`);
+    const storage = await AsyncStorage.getItem(`${PLAYER_COLLECTION}-${teamName}`);
     const players: PlayerStorageDTO[] = storage ? JSON.parse(storage) : [];
-    console.log('players: ', players);
     return players;
   } catch (error) {
     throw error;
