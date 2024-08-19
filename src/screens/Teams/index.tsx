@@ -1,15 +1,21 @@
-import { Container } from '@screens/Teams/styles';
+import { useState } from 'react';
+import { FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Header } from '@components/Header';
 import { Highlight } from '@components/Highlight';
 import { TeamCard } from 'src/components/TeamCard';
-import { useState } from 'react';
-import { FlatList } from 'react-native';
-import { ListEmpty } from '@components/ListEmpty';
 import { Button } from '@components/Button';
+import { ListEmpty } from '@components/ListEmpty';
+import { Container } from './styles';
 
 export function Teams() {
-  // const [teams, setTeams] = useState<string[]>(['Os Pernetas', 'Pernas de Pau', 'Tiririca', 'Cruzeiro do Sul']);
   const [teams, setTeams] = useState<string[]>([]);
+
+  const navigation = useNavigation();
+
+  function handleNewTeam() {
+    navigation.navigate('newTeam');
+  }
 
   return (
     <Container>
@@ -25,7 +31,7 @@ export function Teams() {
         }
         showsVerticalScrollIndicator={false}
       />
-      <Button title="Criar novo time" />
+      <Button title="Criar novo time" onPress={handleNewTeam} />
     </Container>
   );
 }
