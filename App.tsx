@@ -1,11 +1,9 @@
-import { ThemeProvider } from 'styled-components';
-
-import theme from './src/theme';
-
-import { NewTeam } from 'src/screens/NewTeam';
-import { Roboto_400Regular, Roboto_700Bold, useFonts } from '@expo-google-fonts/roboto';
-import { Loading } from '@components/Loading';
 import { StatusBar } from 'react-native';
+import { ThemeProvider } from 'styled-components/native';
+import { Roboto_400Regular, Roboto_700Bold, useFonts } from '@expo-google-fonts/roboto';
+import { Routes } from './src/routes';
+import { Loading } from '@components/Loading';
+import theme from './src/theme';
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold });
@@ -17,7 +15,7 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fontsLoaded ? <NewTeam /> : <Loading />}
+      {fontsLoaded ? <Routes /> : <Loading />}
     </ThemeProvider>
   );
 }
