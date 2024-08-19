@@ -30,6 +30,10 @@ export function Teams() {
     }
   }
 
+  function handleOpenTeams(team: string) {
+    navigation.navigate('players', { team });
+  }
+
   useFocusEffect(useCallback(() => {
     fetchTeams();
   }, []));
@@ -42,7 +46,12 @@ export function Teams() {
         data={teams}
         keyExtractor={item => item}
         contentContainerStyle={teams.length === 0 && { flex: 1 }}
-        renderItem={({ item }) => <TeamCard title={item} />}
+        renderItem={({ item }) =>
+          <TeamCard
+            title={item}
+            onPress={() => handleOpenTeams(item)}
+          />
+        }
         ListEmptyComponent={() =>
           <ListEmpty message="Que tal cadastrar o primeiro time?" />
         }
